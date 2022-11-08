@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const courses = [
+            {
+                "id": 760,
+                "title": "Sinh viên IT đi thực tập tại doanh nghiệp cần biết những gì?",
+                "slug": "sinh-vien-it-di-thuc-tap-tai-doanh-nghiep-can-biet-nhung-gi",
+                "image": "https://i.ytimg.com/vi/YH-E4Y3EaT4/maxresdefault.jpg",
+                "video": "YH-E4Y3EaT4",
+                "duration": 2091,
+                "yt_view_count": 209369,
+                "yt_comment_count": 228,
+                "yt_like_count": 5397,
+                "image_url": "https://i.ytimg.com/vi/YH-E4Y3EaT4/maxresdefault.jpg",
+                "video_url": null
+            },
+            {
+                "id": 696,
+                "title": "\"Code Thiếu Nhi Battle\" Tranh Giành Trà Sữa Size L",
+                "slug": "code-thieu-nhi-battle-tranh-gianh-tra-sua-size-l",
+                "image": "https://i.ytimg.com/vi/sgq7BH6WxL8/maxresdefault.jpg",
+                "video": "sgq7BH6WxL8",
+                "duration": 1510,
+                "yt_view_count": 252534,
+                "yt_comment_count": 186,
+                "yt_like_count": 5324,
+                "image_url": "https://i.ytimg.com/vi/sgq7BH6WxL8/maxresdefault.jpg",
+                "video_url": null
+            },
+            {
+                "id": 456,
+                "title": "Phương pháp học lập trình của Admin F8?",
+                "slug": "phuong-phap-hoc-lap-trinh-cua-admin-f8",
+                "image": "https://i.ytimg.com/vi/DpvYHLUiZpc/maxresdefault.jpg",
+                "video": "DpvYHLUiZpc",
+                "duration": 1446,
+                "yt_view_count": 96301,
+                "yt_comment_count": 310,
+                "yt_like_count": 4989,
+                "image_url": "https://i.ytimg.com/vi/DpvYHLUiZpc/maxresdefault.jpg",
+                "video_url": null
+            },
+            {
+                "id": 44,
+                "title": "Bạn sẽ làm được gì sau khóa học?",
+                "slug": "ban-se-lam-duoc-gi-sau-khoa-hoc",
+                "image": "https://i.ytimg.com/vi/R6plN3FvzFY/maxresdefault.jpg",
+                "video": "R6plN3FvzFY",
+                "duration": 195,
+                "yt_view_count": 523213,
+                "yt_comment_count": 121,
+                "yt_like_count": 3333,
+                "image_url": "https://i.ytimg.com/vi/R6plN3FvzFY/maxresdefault.jpg",
+                "video_url": null
+            },
+            {
+                "id": 533,
+                "title": "Làm sao để có thu nhập cao và đi xa hơn trong ngành IT?",
+                "slug": "lam-sao-de-co-thu-nhap-cao-va-di-xa-hon-trong-nganh-it",
+                "image": "https://i.ytimg.com/vi/oF7isq9IjZM/maxresdefault.jpg",
+                "video": "oF7isq9IjZM",
+                "duration": 1540,
+                "yt_view_count": 68624,
+                "yt_comment_count": 225,
+                "yt_like_count": 3038,
+                "image_url": "https://i.ytimg.com/vi/oF7isq9IjZM/maxresdefault.jpg",
+                "video_url": null
+            },
+        ]
+        // function postItem - ui component
+        function PostItem({ course, onClick }) {
+            return (
+                <div className="post-item">
+                    <img src={course.image} alt="{course.title}" />
+                    <h2 className="post-title" onClick={() => { onClick(course) }}>{course.title}</h2>
+                    <p className="post-view">{course.yt_view_count}</p>
+                </div>
+            )
+        }
+
+        // function App - container
+        function App() {
+            const handleClick = (course) => {
+                console.log(course.title);
+            }
+            return (
+                <div className="post-list">
+                    {
+                        courses.map((e, i) => {
+                            return (
+                                <PostItem
+                                    key={i}
+                                    course={e}
+                                    onClick={handleClick}
+                                />
+                            )
+                        })
+                    }
+                </div>
+
+            )
+        }
+
+        const container = document.getElementById('root');
+        const app = ReactDOM.createRoot(container);
+        app.render(<App />);
+    </script>
+</body>
+
+</html>

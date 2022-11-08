@@ -12,53 +12,52 @@
 </head>
 
 <body>
+    <!--  
+        - props trong JSX
+            - <Yourcomponent 
+                propName1="string literals"
+                propName2={expression}
+            /> 
+            - props default to "true"
+            - spread/rest props
+            - children prop
+                - <Yourcomponent>string literals</Yourcomponent>
+                 - <Yourcomponent>{expression}</Yourcomponent>
+            - render prop
+    -->
     <div id="root"></div>
     <script type="text/babel">
-        const Form = {
-            Input() {
-                return (
-                    <input />
-                )
-            },
-            Checkbox() {
-                return (
-                    <input type='checkbox' />
-                )
-            }
-        }
-        // function button
-        function Button({ title, href, onClick }) {
-            let Tag = 'button';
-            const props = {};
-            if (href) {
-                props.href = href;
-                // Tag = 'a';
-            }
-            if (onClick) {
-                props.onClick = onClick;
-            }
-
+        function Input({ label, ...inputProps }) {
+            console.log(inputProps);
             return (
-                <Tag {...props}>{title}</Tag>
+                <div>
+                    <label>{label}</label>
+                    <input {...inputProps} />
+                </div>
             )
-
         }
-        // function App - container
+        function List({ data, children }) {
+            console.log(children);
+            return (
+                <ul>
+                    {
+                        data.map((item, index) => { return children(item, index) })
+                    }
+                </ul>
+            )
+        }
         function App() {
-            let type = 'Input';
-            let Component = Form[type];
-            function handleClick() {
-                console.log(Math.random());
-            }
+            const cars = ['BMW', 'Honda', 'Mazda'];
             return (
                 <div className="post-list">
-                    <Component />
-                    <p>===========</p>
-                    <Button
-                        title="click me"
-                        href="http://sudanetravelcom.abc/"
-                        onClick={handleClick}
+                    <Input
+                        label='Name'
+                        type='text'
+                        placeholder='name'
                     />
+                    <List data={cars}>{
+                        (item, index) => { return <li key={index}>{item}</li> }
+                    }</List>
 
                 </div>
 

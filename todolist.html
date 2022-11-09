@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <!--     
+        === phần 
+        - todolist
+        
+     -->
+    <script type="text/babel">
+        const useState = React.useState;
+
+        function App() {
+            // get value to storage
+
+            const [list, setList] = useState('');
+            const [lists, setLists] = useState(() => {
+                const jsonLists = JSON.parse(localStorage.getItem('jsonLists'));
+                return (jsonLists || [])
+            });
+            function handleSubmit() {
+                setLists(prev => {
+                    const newLists = [...prev, list];
+                    // save to local storage
+                    const jsonLists = JSON.stringify(newLists);
+                    localStorage.setItem('jsonLists', jsonLists);
+                    return newLists;
+                });
+                setList('');
+            }
+            return (
+                <div className="App">
+                    <input value={list} onChange={e => setList(e.target.value)} />
+                    <button onClick={handleSubmit}>Add</button>
+                    <ul>
+                        {
+                            lists.map((item, index) => {
+                                return (
+                                    <li key={index}>{item}</li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div >
+            );
+        }
+
+        const container = document.getElementById('root');
+        const app = ReactDOM.createRoot(container);
+        app.render(<App />);
+    </script>
+</body>
+
+</html>

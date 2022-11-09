@@ -15,12 +15,18 @@
     <div id="root"></div>
     <script type="text/babel">
         const useState = React.useState;
+        function Content() {
+            return (
+                <h1>Hello anh em!!!</h1>
+            )
+        }
         function App() {
-
+            const [show, setShow] = useState(false);
 
             return (
                 <div className="App">
-
+                    <button onClick={() => { setShow(!show) }}>Toggle</button>
+                    {show && <Content />}
                 </div >
             );
         }

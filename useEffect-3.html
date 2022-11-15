@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <!-- 
+        - events
+            - add/remove event listener
+        - observer pattern : subscribe / unsubscribe
+        - closure
+        - timer: setTimeout, setInterval, clearTimeout, clearInterval
+        - useState
+        - mounted/ unmounted
+        - call api
+        ===========> dung khi muon side effects(khi co tac dong xay ra du lieu thay doi)
+    - update DOM
+    - call API
+    - listener DOM events
+    +scroll
+    +resize
+    - cleanup
+    +remove listener /unsubscribe
+    +clear timer
+
+
+    // useEffect(callback, [deps])
+        - callback sẽ được gọi mỗi khi deps thay đổi
+    // useEffect(callback)
+        - gọi callback mỗi khi component re-render
+        - goi callback khi component thêm element vào DOM
+    // useEffect(callback, [])
+        - chỉ gọi 1 lần callback khi component mounted
+
+
+    // callback luôn luôn được gọi sau khi component mounted
+    -->
+    <script type="text/babel">
+        const useState = React.useState;
+        const useEffect = React.useEffect;
+        const tabs = ['posts', 'comments', 'albums']
+        function Content() {
+            const [title, setTitle] = useState('');
+            const [posts, setPosts] = useState([]);
+            const [type, setType] = useState('posts');
+            // 3. useEffect(callback, [deps])
+            useEffect(() => {
+
+                fetch(`https://jsonplaceholder.typicode.com/${type}`)
+                    .then(res => res.json())
+                    .then(posts => {
+                        setPosts(posts);
+                    })
+            }, [type]);
+            return (
+                <div>
+                    {tabs.map(tab => {
+                        return <button key={tab}
+                            style={type === tab ? {
+                                color: '#fff',
+                                backgroundColor: '#333',
+                            } : {}}
+                            onClick={() => setType(tab)}
+                        >{tab}</button>
+                    })}
+                    <ul>
+                        {
+                            posts.map(item => {
+                                if (type === 'comments') {
+                                    return <li key={item.id}>{item.name}</li>
+                                } else {
+                                    return <li key={item.id}>{item.title}</li>
+                                }
+                            })
+                        }
+                    </ul>
+
+                </div>
+            )
+        }
+        function App() {
+            const [show, setShow] = useState(false);
+
+            return (
+                <div className="App">
+                    <button onClick={() => { setShow(!show) }}>Toggle</button>
+                    {show && <Content />}
+                </div >
+            );
+        }
+
+        const container = document.getElementById('root');
+        const app = ReactDOM.createRoot(container);
+        app.render(<App />);
+    </script>
+</body>
+
+</html>

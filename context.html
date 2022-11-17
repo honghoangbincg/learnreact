@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <!-- 
+       context 
+        - đơn giản hóa việc truyền dữ liệu từ component cha tới component con mà không cần sử dụng props
+
+        eg: dark and light
+     -->
+    <style>
+        .dark {
+            color: #fff;
+            background-color: #333;
+        }
+    </style>
+    <script type="text/babel">
+        const useState = React.useState;
+        const useEffect = React.useEffect;
+        const useRef = React.useRef;
+        const memo = React.memo;
+        const useMemo = React.useMemo;
+        const useReducer = React.useReducer;
+        function Paragraph({ theme }) {
+            console.log('theme: ', theme);
+            return (
+                <p className={theme}>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore dicta mollitia eaque laboriosam! Facere id minima ipsum enim reprehenderit eius, voluptates magni laboriosam provident explicabo omnis ad natus assumenda vero?
+                </p>
+            )
+        }
+        function Content({ theme }) {
+            return (
+                <div>
+                    <Paragraph theme={theme} />
+                </div>
+            )
+        }
+        function App() {
+            const [theme, setTheme] = useState('dark');
+            const toggleTheme = () => {
+                setTheme(theme === 'dark' ? 'light' : 'dark');
+            }
+            return (
+                <div className="App">
+                    <button onClick={toggleTheme}>Toggle Theme</button>
+                    <Content theme={theme} />
+                </div>
+            );
+        }
+
+        const container = document.getElementById('root');
+        const app = ReactDOM.createRoot(container);
+        app.render(<App />);
+    </script>
+</body>
+
+</html>

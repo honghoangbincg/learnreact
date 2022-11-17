@@ -29,7 +29,18 @@
         const memo = React.memo;
         const useMemo = React.useMemo;
         const useReducer = React.useReducer;
+        function logger(reducer) {
 
+            return (prevState, action) => {
+                console.group(action.type);
+                console.log('prev state: ', prevState);
+                console.log('Action: ', action);
+                const newState = reducer(prevState, action);
+                console.log('New state: ', newState);
+                console.groupEnd();
+                return newState;
+            };
+        }
         // init state
         const initState = {
             job: '',
@@ -59,7 +70,6 @@
         }
         // reducer
         const reducer = (state, action) => {
-            console.log(action);
             switch (action.type) {
                 case SET_JOB:
                     return {
@@ -85,7 +95,7 @@
 
         }
         function App() {
-            const [state, dispatch] = useReducer(reducer, initState);
+            const [state, dispatch] = useReducer(logger(reducer), initState);
             const { job, jobs } = state;
             const foucsInput = useRef();
             const handleSubmit = () => {
